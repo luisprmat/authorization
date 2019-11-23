@@ -14,13 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware('auth')->namespace('Admin')->group(function() {
-    Route::post('admin/posts', 'PostController@store');
 
-    Route::put('admin/posts/{post}', 'Postcontroller@update');
+Route::middleware('auth')->namespace('Admin')->prefix('admin/')->group(function() {
+    Route::get('posts', 'PostController@index');
+
+    Route::post('posts', 'PostController@store');
+
+    Route::put('posts/{post}', 'Postcontroller@update');
 });
 
 
 Route::name('login')->get('login', function () {
     return 'Login';
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

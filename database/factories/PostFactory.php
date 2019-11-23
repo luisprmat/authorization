@@ -10,3 +10,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'user_id' => factory(User::class),
     ];
 });
+
+$factory->state(Post::class, 'draft', ['status' => 'draft']);
+$factory->state(Post::class, 'published', ['status' => 'published']);

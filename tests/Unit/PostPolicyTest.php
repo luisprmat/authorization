@@ -64,4 +64,38 @@ class PostPolicyTest extends TestCase
 
         $this->assertFalse($result);
     }
+
+    /** @test */
+    public function admins_can_delete_published_posts()
+    {
+        $admin = $this->createAdmin();
+
+        $post = factory(Post::class)->state('published')->create();
+
+        $this->assertTrue(Gate::forUser($admin)->allows('delete-post', $post));
+    }
+
+    /** @test */
+    public function authors_can_delete_unpublished_posts()
+    {
+        $user = $this->createUser();
+
+        $post = factory(Post::class)->state('draft')->create([
+            'user_id' => $user->id,
+        ]);
+
+        $this->assertTrue(Gate::forUser($user)->allows('delete-post', $post));
+    }
+
+    /** @test */
+    public function authors_cannot_delete_published_posts()
+    {
+        $user = $this->createUser();
+
+        $post = factory(Post::class)->state('published')->create([
+            'user_id' => $user->id,
+        ]);
+
+        $this->assertFalse(Gate::forUser($user)->allows('delete-post', $post));
+    }
 }

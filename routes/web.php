@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware('auth')->namespace('Admin')->group(function() {
+    Route::post('admin/posts', 'PostController@store');
+
+    Route::put('admin/posts/{post}', 'Postcontroller@update');
+});
+
+
+Route::name('login')->get('login', function () {
+    return 'Login';
+});

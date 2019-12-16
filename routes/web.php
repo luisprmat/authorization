@@ -20,6 +20,8 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin/')->group(function(
 
     Route::post('posts', 'PostController@store');
 
+    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
+
     Route::put('posts/{post}', 'Postcontroller@update');
 });
 

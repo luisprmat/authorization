@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
-use Illuminate\Http\{Request, Response};
 use App\Http\Controllers\Controller;
+use Illuminate\Http\{Request, Response};
 use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
@@ -16,7 +16,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate();
+        $posts = Post::query()
+            ->with('author') //Eager loading (N+1 problem)
+            ->unless(auth()->user()->isAdmin(), function($q) {
+                $q->where('user_id', auth()->id());
+            })
+            ->paginate();
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -68,6 +73,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize('update', $post);
+
+        return 'Editar post '.$post->id;
     }
 
     /**

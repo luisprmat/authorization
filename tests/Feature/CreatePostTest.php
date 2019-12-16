@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,8 +22,13 @@ class CreatePostTest extends TestCase
             'title' => 'New post'
         ]);
 
-        $response->assertStatus(200)
-            ->assertSee('Post created');
+        $response->assertStatus(200)->assertSee('Post created');
+
+        // tap(Post::first(), function ($post) {
+        //     $this->assertNotNull($post, 'The post was not created');
+
+        //     $this->assertSame('New post', $post->title);
+        // });
 
         $this->assertDatabaseHas('posts', [
             'title' => 'New post'
@@ -59,8 +65,10 @@ class CreatePostTest extends TestCase
 
         $response->assertStatus(403);
 
-        $this->assertDatabaseMissing('posts', [
-            'title' => 'New post'
-        ]);
+        // $this->assertDatabaseMissing('posts', [
+        //     'title' => 'New post'
+        // ]);
+
+        $this->assertDatabaseEmpty('posts');
     }
 }

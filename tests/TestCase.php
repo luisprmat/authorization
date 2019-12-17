@@ -15,7 +15,9 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        // TestResponse::ma
+        TestResponse::macro('assertViewCollection', function ($var) {
+            return new TestCollectionData($this->viewData($var));
+        });
 
         $this->enableQueryLog();
     }

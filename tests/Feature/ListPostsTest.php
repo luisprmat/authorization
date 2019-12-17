@@ -6,6 +6,7 @@ use App\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\TestCollectionData;
 
 class ListPostsTest extends TestCase
 {
@@ -48,11 +49,13 @@ class ListPostsTest extends TestCase
 
         $response = $this->get('admin/posts');
 
-        $response->assertStatus(200)
-            ->assertViewIs('admin.posts.index')
-            ->assertViewHas('posts', function ($posts) use ($post1ByCurrentUser, $post2ByAnotherUser, $post3ByCurrentUser, $post4ByAnotherUser) {
-                return $posts->contains($post1ByCurrentUser) && !$posts->contains($post2ByAnotherUser)
-                    && $posts->contains($post3ByCurrentUser) && !$posts->contains($post4ByAnotherUser);
-        });
+        $response->assertStatus(200)->assertViewIs('admin.posts.index');
+
+        $response->assertViewCollection('posts')
+            ->contains($post1ByCurrentUser)
+            ->contains($post3ByCurrentUser)
+            ->notContains($post2ByAnotherUser)
+            ->notContains($post4ByAnotherUser);
+
     }
 }

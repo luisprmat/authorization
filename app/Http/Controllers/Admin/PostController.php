@@ -18,7 +18,7 @@ class PostController extends Controller
     {
         $posts = Post::query()
             ->with('author') //Eager loading (N+1 problem)
-            ->unless(auth()->user()->isAdmin(), function($q) {
+            ->unless(auth()->user()->can('view-all', Post::class), function($q) {
                 $q->where('user_id', auth()->id());
             })
             ->paginate();

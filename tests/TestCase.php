@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Bouncer;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -36,7 +37,11 @@ abstract class TestCase extends BaseTestCase
 
     protected function createAdmin()
     {
-        return factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->create();
+
+        $user->allow()->everything();
+
+        return $user;
     }
 
     protected function assertDatabaseEmpty($table, $connection = null)

@@ -11,9 +11,7 @@ class PostPolicy
 
     public function before(User $user, $ability)
     {
-        if($user->isAdmin()) {
-            return true;
-        }
+        //
     }
 
     /**
@@ -47,7 +45,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->role === 'author';
+        //
     }
 
     /**

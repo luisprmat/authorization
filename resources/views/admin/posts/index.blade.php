@@ -28,7 +28,13 @@
                                     <a href="{{ route('posts.edit', $post) }}"><i class="fas fa-edit fa-fw"></i></a>
                                 @endcan
                                 @can('delete', $post)
-                                    <a href="#"><i class="fas fa-trash-alt fa-fw"></i></a>
+                                    <a href="{{ route('posts.destroy', $post) }}" onclick="event.preventDefault();
+                                        document.getElementById('delete-button-{{ $post->id }}').submit();"><i class="fas fa-trash-alt fa-fw"></i>
+                                    </a>
+                                    <form id="delete-button-{{ $post->id }}" action="{{ route('posts.destroy', $post) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 @endcan
                             </td>
                         </tr>

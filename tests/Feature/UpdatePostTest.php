@@ -144,7 +144,7 @@ class UpdatePostTest extends TestCase
             'title' => 'Updated post title',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertRedirect('login');
 
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id,

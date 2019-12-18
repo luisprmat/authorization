@@ -23,11 +23,8 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin/')->group(function(
     Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
 
     Route::put('posts/{post}', 'Postcontroller@update');
-});
 
-
-Route::name('login')->get('login', function () {
-    return 'Login';
+    Route::delete('posts/{post}', 'Postcontroller@destroy')->name('posts.destroy');
 });
 
 Auth::routes();

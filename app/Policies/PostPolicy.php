@@ -48,19 +48,17 @@ class PostPolicy
         //
     }
 
-    // /**
-    //  * Determine whether the user can update the post.
-    //  *
-    //  * @param  \App\User  $user
-    //  * @param  \App\Post  $post
-    //  * @return mixed
-    //  */
-    // public function update(User $user, Post $post)
-    // {
-    //     return $user->isAn('author') && ($user->id === $post->user_id);
-
-    //     // return $user->owns($post);
-    // }
+    /**
+     * Determine whether the user can update the post.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Post  $post
+     * @return mixed
+     */
+    public function update(User $user, Post $post)
+    {
+        //
+    }
 
     /**
      * Determine whether the user can delete the post.
@@ -69,10 +67,14 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    // public function delete(User $user, Post $post)
-    // {
-    //     return $user->owns($post) && ! $post->isPublished();
-    // }
+    public function delete(User $user, Post $post)
+    {
+        if ($user->can('delete-published', $post)) {
+            return true;
+        }
+
+        return $post->isDraft() && $user->can('delete-draft', $post);
+    }
 
     public function deleteAll()
     {

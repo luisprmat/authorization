@@ -39,7 +39,9 @@ abstract class TestCase extends BaseTestCase
     {
         $user = factory(User::class)->create();
 
-        $user->allow()->everything();
+        Bouncer::allow('admin')->everything();
+
+        Bouncer::assign('admin')->to($user);
 
         return $user;
     }

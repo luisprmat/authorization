@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Bouncer;
 use App\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,6 +11,14 @@ use Tests\TestCase;
 class UpdatePostTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Bouncer::allow('editor')->to('update', Post::class);
+        Bouncer::allow('author')->toOwn(Post::class);
+    }
 
     /** @test */
     function admins_can_update_posts()
@@ -36,11 +45,39 @@ class UpdatePostTest extends TestCase
     }
 
     /** @test */
-    function authors_can_update_posts()
+    function editors_can_update_posts()
     {
         $this->withoutExceptionHandling();
 
         $user = $this->createUser();
+
+        $user->assign('editor');
+
+        $post = factory(Post::class)->create();
+
+        $this->actingAs($user);
+
+        $response = $this->put("admin/posts/{$post->id}", [
+            'title' => 'Updated post title',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertSee('¡Post actualizado!');
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $post->id,
+            'title' => 'Updated post title'
+        ]);
+    }
+
+    /** @test */
+    function authors_can_update_posts_they_own()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = $this->createUser();
+
+        $user->assign('author');
 
         $post = factory(Post::class)->create([
             'user_id' => $user->id,
@@ -56,6 +93,29 @@ class UpdatePostTest extends TestCase
             ->assertSee('¡Post actualizado!');
 
         $this->assertDatabaseHas('posts', [
+            'id' => $post->id,
+            'title' => 'Updated post title'
+        ]);
+    }
+
+    /** @test */
+    function authors_cannot_update_posts_they_dont_own()
+    {
+        $user = $this->createUser();
+
+        $user->assign('author');
+
+        $post = factory(Post::class)->create();
+
+        $this->actingAs($user);
+
+        $response = $this->put("admin/posts/{$post->id}", [
+            'title' => 'Updated post title',
+        ]);
+
+        $response->assertStatus(403);
+
+        $this->assertDatabaseMissing('posts', [
             'id' => $post->id,
             'title' => 'Updated post title'
         ]);

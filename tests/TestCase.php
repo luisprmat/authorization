@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Bouncer;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -19,6 +18,8 @@ abstract class TestCase extends BaseTestCase
         TestResponse::macro('assertViewCollection', function ($var) {
             return new TestCollectionData($this->viewData($var));
         });
+
+        $this->seed('BouncerSeeder');
 
         $this->enableQueryLog();
     }
@@ -39,9 +40,7 @@ abstract class TestCase extends BaseTestCase
     {
         $user = factory(User::class)->create();
 
-        Bouncer::allow('admin')->everything();
-
-        Bouncer::assign('admin')->to($user);
+        $user->assign('admin');
 
         return $user;
     }

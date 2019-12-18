@@ -17,19 +17,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // $this->call(UsersTableSeeder::class);
-        $this->call(PostSeeder::class);
+        $this->call([
+            BouncerSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class
+        ]);
     }
 
     protected function truncateTables(array $tables)
     {
-        // Desactiva revisión de claves foráneas
+        // Disable checking of foreing keys
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
 
         foreach ($tables as $table) {
             DB::table($table)->truncate();
         }
 
-        // Activa revisión de claves foráneas
+        // Activate checking of foreing keys
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 }

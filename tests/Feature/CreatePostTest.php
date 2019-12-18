@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Silber\Bouncer\BouncerFacade;
 use Tests\TestCase;
 
 class CreatePostTest extends TestCase
@@ -25,12 +23,6 @@ class CreatePostTest extends TestCase
 
         $response->assertStatus(200)->assertSee('Post created');
 
-        // tap(Post::first(), function ($post) {
-        //     $this->assertNotNull($post, 'The post was not created');
-
-        //     $this->assertSame('New post', $post->title);
-        // });
-
         $this->assertDatabaseHas('posts', [
             'title' => 'New post'
         ]);
@@ -44,10 +36,6 @@ class CreatePostTest extends TestCase
         $this->actingAs($user = $this->createUser());
 
         $user->assign('author');
-
-        BouncerFacade::allow('author')->to('create', Post::class);
-
-        // $user->allow('create', Post::class);
 
         $response = $this->post('admin/posts', [
             'title' => 'New post'
@@ -71,10 +59,6 @@ class CreatePostTest extends TestCase
         ]);
 
         $response->assertStatus(403);
-
-        // $this->assertDatabaseMissing('posts', [
-        //     'title' => 'New post'
-        // ]);
 
         $this->assertDatabaseEmpty('posts');
     }

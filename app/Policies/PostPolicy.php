@@ -69,10 +69,10 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Post $post)
-    {
-        return $user->owns($post) && ! $post->isPublished();
-    }
+    // public function delete(User $user, Post $post)
+    // {
+    //     return $user->owns($post) && ! $post->isPublished();
+    // }
 
     public function deleteAll()
     {

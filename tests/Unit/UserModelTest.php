@@ -12,8 +12,8 @@ class UserModelTest extends TestCase
     /** @test */
     public function a_user_owns_a_model()
     {
-        $userA = $this->createUser();
-        $userB = $this->createUser();
+        $userA = $this->aUser();
+        $userB = $this->aUser();
 
         $ownedByUserA = new OwnedModel(['user_id' => $userA->id]);
         $ownedByUserB = new OwnedModel(['user_id' => $userB->id]);

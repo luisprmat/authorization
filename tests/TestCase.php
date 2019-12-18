@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    protected function createUser(array $attributes = [])
+    protected function aUser(array $attributes = [])
     {
         return factory(User::class)->create($attributes);
     }

@@ -40,7 +40,7 @@ class UpdatePostTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = $this->createUser();
+        $user = $this->aUser();
 
         $user->assign('editor');
 
@@ -66,7 +66,7 @@ class UpdatePostTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = $this->createUser();
+        $user = $this->aUser();
 
         $user->assign('author');
 
@@ -92,7 +92,7 @@ class UpdatePostTest extends TestCase
     /** @test */
     function authors_cannot_update_posts_they_dont_own()
     {
-        $user = $this->createUser();
+        $user = $this->aUser();
 
         $user->assign('author');
 
@@ -117,7 +117,7 @@ class UpdatePostTest extends TestCase
     {
         $post = factory(Post::class)->create();
 
-        $user = $this->createUser();
+        $user = $this->aUser();
 
         $this->actingAs($user);
 

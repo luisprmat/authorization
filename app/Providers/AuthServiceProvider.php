@@ -6,6 +6,7 @@ use App\{Post, User};
 use App\Policies\PostPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,14 +29,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Gate::before(function (User $user) {
-        //     if ($user->isAdmin()) {
-        //         return true;
-        //     }
-        // });
-
-        Gate::define('view-dashboard', function (User $user) {
-            return $user->role === 'author';
+        Gate::define('see-content', function (?User $user) {
+            return $user || Cookie::get('accept_terms') === '1';
         });
     }
 }

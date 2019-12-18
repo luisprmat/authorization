@@ -12,13 +12,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $this->createAdmin();
+
+        $this->createAuthor();
+    }
+
+    protected function createAdmin()
+    {
         $admin = factory(User::class)->create([
             'name' => 'Administrador',
             'email' => 'admin@gmail.com'
         ]);
 
         $admin->assign('admin');
+    }
 
+    protected function createAuthor()
+    {
         $user = factory(User::class)->create([
             'name' => 'Luis Antonio Parrado',
             'email' => 'luisprmat@gmail.com',

@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class AcceptTermsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     function a_user_can_accept_the_terms_and_conditions()
     {

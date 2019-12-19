@@ -21,16 +21,24 @@
 
                         <form action="{{ url('accept-terms') }}" method="POST">
                             @csrf
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="accept" id="accept" value="1">
-                                <label class="custom-control-label" for="accept">
-                                    Confirmo que acepto los términos y condiciones de uso
-                                </label>
-                                <br>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="accept" id="accept" value="1">
+                                    <label class="custom-control-label" for="accept">
+                                        Confirmo que acepto los términos y condiciones de uso
+                                    </label>
+                                    <br>
+                                </div>
                             </div>
+
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </form>
                     @endcan
+
+                    @auth
+                        <hr>
+                        <a class="btn btn-secondary" href="{{ route('posts.index') }}">Volver al listado</a>
+                    @endauth
                 </div>
             </div>
         </div>

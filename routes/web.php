@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('posts/{post}', 'PostController@show')->name('posts.show');
+Route::get('posts/{post}', 'PostController@show')->name('post.show');
 
 Route::post('accept-terms', 'AcceptTermsController@accept');
 

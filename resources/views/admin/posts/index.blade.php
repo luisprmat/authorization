@@ -36,8 +36,9 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->author->name }}</td>
                             <td class="d-flex justify-content-end">
+                                <a class="mr-2" href="{{ route('post.show', ['post' => $post->id]) }}"><i class="fas fa-eye fa-fw"></i></a>
                                 @can('update', $post)
-                                    <a href="{{ route('posts.edit', $post) }}"><i class="fas fa-edit fa-fw"></i></a>
+                                    <a class="mr-2" href="{{ route('posts.edit', $post) }}"><i class="fas fa-edit fa-fw"></i></a>
                                 @endcan
                                 @can('delete', $post)
                                     <a href="{{ route('posts.destroy', $post) }}" onclick="event.preventDefault();

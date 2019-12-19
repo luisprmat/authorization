@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
         $this->createAdmin();
 
         $this->createAuthor();
+
+        $this->createUser();
     }
 
     protected function createAdmin()
@@ -36,4 +38,14 @@ class UserSeeder extends Seeder
         ]);
         $user->assign('author');
     }
+
+    protected function createUser()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Natalia Manrique',
+            'email' => 'natis_andru@hotmail.com',
+            'password' => '$2y$10$xTMERYEyKNCiWMAozt/mpuwxOOIGosd24sbNcNiIo4gw0LVE7kSrC' //12345678
+        ]);
+    }
+
 }

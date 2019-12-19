@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\{Request, Response};
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\{Request, Response};
 
 class PostController extends Controller
 {
@@ -77,6 +78,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        // $response = Gate::inspect('update', $post);
+
+        // if ($response->denied()) {
+        //     auth()->logout();
+        //     return redirect('login');
+        // }
+
         return 'Editar post '.$post->id;
     }
 

@@ -4,10 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h1>Posts</h1>
-            @can('create', App\Post::class)
-                <a href="#" class="btn btn-primary">Crear Post</a>
-            @endcan
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <h1>Posts</h1>
+                @can('create', App\Post::class)
+                    <a href="#" class="btn btn-primary">Crear Post</a>
+                @endcan
+            </div>
+
             <table class="table">
                 <thead class="thead-light">
                     <tr>

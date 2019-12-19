@@ -9,6 +9,11 @@ use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +38,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Post::class);
+        return 'New post'; //TODO: Add form
     }
 
     /**
@@ -44,8 +49,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Post::class);
-
         $request->user()->posts()->create([
             'title' => $request->title,
         ]);
@@ -72,8 +75,6 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $this->authorize('update', $post);
-
         return 'Editar post '.$post->id;
     }
 
@@ -101,8 +102,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $this->authorize('delete', $post);
-
         $post->delete();
 
         return redirect('admin/posts');

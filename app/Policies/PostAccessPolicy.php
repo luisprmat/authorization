@@ -22,7 +22,7 @@ class PostAccessPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**

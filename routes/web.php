@@ -19,16 +19,8 @@ Route::get('posts/{post}', 'PostController@show')->name('posts.show');
 
 Route::post('accept-terms', 'AcceptTermsController@accept');
 
-Route::middleware('auth')->namespace('Admin')->prefix('admin/')->group(function() {
-    Route::get('posts', 'PostController@index');
-
-    Route::post('posts', 'PostController@store');
-
-    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
-
-    Route::put('posts/{post}', 'Postcontroller@update');
-
-    Route::delete('posts/{post}', 'Postcontroller@destroy')->name('posts.destroy');
+Route::middleware('auth')->namespace('Admin')->prefix('admin')->group(function() {
+    Route::resource('posts', 'PostController');
 });
 
 Auth::routes();

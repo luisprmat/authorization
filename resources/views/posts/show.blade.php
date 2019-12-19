@@ -14,6 +14,8 @@
 
                     @can('see-content')
                         {{ $post->content }}
+                        <hr>
+                        <p><strong>Autor: </strong><i>{{ $post->author->name }}</i></p>
                     @else
                         <h5>Debes aceptar nuestros términos de uso para ver el contenido</h5>
 

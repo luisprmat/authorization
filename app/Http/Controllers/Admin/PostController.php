@@ -38,7 +38,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return 'New post'; //TODO: Add form
+        return view('admin.posts.create');
     }
 
     /**
@@ -51,9 +51,11 @@ class PostController extends Controller
     {
         $request->user()->posts()->create([
             'title' => $request->title,
+            'teaser' => $request->teaser,
+            'content' => $request->content
         ]);
 
-        return new Response('Post created');
+        return redirect(route('posts.index'))->with('status', 'Post creado con éxito');
     }
 
     /**

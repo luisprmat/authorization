@@ -7,9 +7,18 @@
             <div class="d-flex justify-content-between align-items-center mb-1">
                 <h1>Posts</h1>
                 @can('create', App\Post::class)
-                    <a href="#" class="btn btn-primary">Crear Post</a>
+                    <a href="{{ route('posts.create') }}" class="btn btn-primary">Crear Post</a>
                 @endcan
             </div>
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Cerrar</span>
+                    </button>
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <table class="table">
                 <thead class="thead-light">

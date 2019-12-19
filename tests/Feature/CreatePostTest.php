@@ -19,16 +19,23 @@ class CreatePostTest extends TestCase
 
         $this->get('admin/posts/create')
             ->assertSuccessful()
-            ->assertSee('New post');
+            ->assertViewIs('admin.posts.create')
+            ->assertSee('Crear post');
 
         $response = $this->post('admin/posts', [
-            'title' => 'New post'
+            'title' => 'New post',
+            'teaser' => 'The teaser',
+            'content' => 'Content of the post',
+            'user_id' => $admin->id
         ]);
 
-        $response->assertStatus(200)->assertSee('Post created');
+        $response->assertRedirect();
 
         $this->assertDatabaseHas('posts', [
-            'title' => 'New post'
+            'title' => 'New post',
+            'teaser' => 'The teaser',
+            'content' => 'Content of the post',
+            'user_id' => $admin->id
         ]);
     }
 
@@ -43,14 +50,13 @@ class CreatePostTest extends TestCase
 
         $this->get('admin/posts/create')
             ->assertSuccessful()
-            ->assertSee('New post');
+            ->assertSee('Crear post');
 
         $response = $this->post('admin/posts', [
             'title' => 'New post'
         ]);
 
-        $response->assertStatus(200)
-            ->assertSee('Post created');
+        $response->assertStatus(302);
 
         $this->assertDatabaseHas('posts', [
             'title' => 'New post'

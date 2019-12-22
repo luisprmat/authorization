@@ -33,7 +33,7 @@ class ShowPostTest extends TestCase
         $response = $this->get($this->postPage());
 
         $response->assertOk()
-            ->assertViewIs('posts.show')
+            ->assertViewIs('post.show')
             ->assertSee('The teaser')
             ->assertSee('The content of the post');
     }

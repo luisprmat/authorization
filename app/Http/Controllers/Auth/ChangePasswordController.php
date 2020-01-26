@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordController extends Controller
 {
@@ -24,7 +25,7 @@ class ChangePasswordController extends Controller
 
         $user = auth()->user();
 
-        $user->password = bcrypt($data['password']);
+        $user->password = Hash::make($data['password']);
 
         $user->save();
 

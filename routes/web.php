@@ -23,6 +23,13 @@ Route::middleware('auth')->namespace('Admin')->prefix('admin')->group(function()
     Route::resource('posts', 'PostController');
 });
 
+Route::middleware('auth')->prefix('password')->namespace('Auth')->group(function () {
+    Route::get('change', 'ChangePasswordController@showForm')->name('password.formchange');
+
+    Route::put('change', 'ChangePasswordController@change')->name('password.change');
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
